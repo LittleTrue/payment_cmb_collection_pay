@@ -6,13 +6,13 @@
  * @description : This file is part of [purchase].
  * DEZHI all rights reserved.
  */
-namespace Collection\cmbCollectionClient\CombinePay;
+namespace Collection\cmbCollectionClient\BarcodePay;
 
 use Collection\cmbCollectionClient\Application;
 use Collection\cmbCollectionClient\Base\BaseClient;
 
 /**
- * 合单支付 -- 通用支付请求客户端.
+ * 合单支付 -- 付款码收款请求客户端.
  */
 class Client extends BaseClient
 {
@@ -35,19 +35,6 @@ class Client extends BaseClient
     }
 
     /**
-     * 收款码申请支付.
-     * @return string
-     */
-    public function scanPaySubmit(array $payInfo)
-    {
-        $this->setUri('/scanPay/order');
-
-        $this->setParams($payInfo);
-
-        return $request = $this->httpPostJson();
-    }
-
-    /**
      * 付款码收款退款申请.
      * @return string
      */
@@ -61,12 +48,12 @@ class Client extends BaseClient
     }
 
     /**
-     * 收款码收款退款申请.
+     * 付款码收款支付结果查询.
      * @return string
      */
-    public function scanRefund(array $payInfo)
+    public function orderQuery(array $payInfo)
     {
-        $this->setUri('/scanPay/refund');
+        $this->setUri('/sweptPay/orderStatusQuery');
 
         $this->setParams($payInfo);
 

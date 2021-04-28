@@ -13,62 +13,48 @@ use Collection\cmbCollectionClient\Base\Exceptions\ClientError;
 use Collection\cmbCollectionClient\Order\Client;
 
 /**
- * 合单支付 -- 支付宝支付服务
+ * 合单支付 -- 收款码收款服务
  */
-class AliPayService
+class ScanPayService
 {
     /**
      * @var Client
      */
-    private $aliPayClient;
+    private $scanPayClient;
 
     public function __construct(Application $app)
     {
-        $this->aliPayClient = $app['ali_pay'];
+        $this->scanPayClient = $app['scan_pay'];
     }
 
     /**
-     * 发起支付宝native支付.
-     * @param  $payInfo 支付信息
+     * 通用场景 收款码支付.
      * @throws ClientError
      */
-    public function nativeOrderSubmit(array $payInfo)
+    public function scanPaySubmit(array $payInfo)
     {
         if (empty($payInfo)) {
             throw new ClientError('请求参数丢失。');
         }
 
-        return $this->aliPayClient->nativeOrderSubmit($payInfo);
+        return $this->scanPayClient->scanPaySubmit($payInfo);
     }
 
     /**
-     * 发起支付宝服务窗支付.
+     * 收款码收款退款申请.
      * @throws ClientError
      */
-    public function windowsOrderSubmit(array $payInfo)
+    public function scanRefund(array $payInfo)
     {
         if (empty($payInfo)) {
             throw new ClientError('请求参数丢失。');
         }
 
-        return $this->aliPayClient->windowsOrderSubmit($payInfo);
+        return $this->scanPayClient->scanRefund($payInfo);
     }
 
     /**
-     * 支付宝支付退款申请.
-     * @throws ClientError
-     */
-    public function orderRefund(array $payInfo)
-    {
-        if (empty($payInfo)) {
-            throw new ClientError('请求参数丢失。');
-        }
-
-        return $this->aliPayClient->orderRefund($payInfo);
-    }
-
-    /**
-     * 支付宝支付结果查询.
+     * 收款码收款支付结果查询.
      * @throws ClientError
      */
     public function orderQuery(array $payInfo)
@@ -77,6 +63,6 @@ class AliPayService
             throw new ClientError('请求参数丢失。');
         }
 
-        return $this->aliPayClient->orderQuery($payInfo);
+        return $this->scanPayClient->orderQuery($payInfo);
     }
 }

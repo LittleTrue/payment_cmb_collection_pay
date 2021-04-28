@@ -59,4 +59,17 @@ class Client extends BaseClient
 
         return $request = $this->httpPostJson();
     }
+
+    /**
+     * 支付宝支付结果查询.
+     * @return string
+     */
+    public function orderQuery(array $payInfo)
+    {
+        $this->setUri('/aliPay/orderStatusQuery');
+
+        $this->setParams($payInfo);
+
+        return $request = $this->httpPostJson();
+    }
 }

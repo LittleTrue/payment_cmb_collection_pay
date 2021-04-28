@@ -53,4 +53,17 @@ class WeChatPayService
 
         return $this->wechatPayClient->orderRefund($payInfo);
     }
+
+    /**
+     * 微信支付结果查询.
+     * @throws ClientError
+     */
+    public function orderQuery(array $payInfo)
+    {
+        if (empty($payInfo)) {
+            throw new ClientError('请求参数丢失。');
+        }
+
+        return $this->wechatPayClient->orderQuery($payInfo);
+    }
 }

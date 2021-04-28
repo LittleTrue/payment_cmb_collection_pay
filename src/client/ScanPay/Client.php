@@ -6,14 +6,13 @@
  * @description : This file is part of [purchase].
  * DEZHI all rights reserved.
  */
-namespace Collection\cmbCollectionClient\WeChatPay;
+namespace Collection\cmbCollectionClient\ScanPay;
 
 use Collection\cmbCollectionClient\Application;
 use Collection\cmbCollectionClient\Base\BaseClient;
-use Collection\cmbCollectionClient\Base\Exceptions\ClientError;
 
 /**
- * 合单支付 -- 微信支付请求客户端.
+ * 合单支付 -- 收款码收款请求客户端.
  */
 class Client extends BaseClient
 {
@@ -23,26 +22,12 @@ class Client extends BaseClient
     }
 
     /**
-     * 发起微信统一支付下单.
-     * @param  $payInfo 支付信息
-     * @throws ClientError
-     */
-    public function unifiedOrderSubmit(array $payInfo)
-    {
-        $this->setUri('/weixinPay/order');
-
-        $this->setParams($payInfo);
-
-        return $request = $this->httpPostJson();
-    }
-
-    /**
-     * 微信支付退款申请.
+     * 收款码申请支付.
      * @return string
      */
-    public function orderRefund(array $payInfo)
+    public function scanPaySubmit(array $payInfo)
     {
-        $this->setUri('/weixinPay/refund');
+        $this->setUri('/scanPay/order');
 
         $this->setParams($payInfo);
 
@@ -50,12 +35,25 @@ class Client extends BaseClient
     }
 
     /**
-     * 微信支付结果查询.
+     * 收款码收款退款申请.
+     * @return string
+     */
+    public function scanRefund(array $payInfo)
+    {
+        $this->setUri('/scanPay/refund');
+
+        $this->setParams($payInfo);
+
+        return $request = $this->httpPostJson();
+    }
+
+    /**
+     * 收款码收款支付结果查询.
      * @return string
      */
     public function orderQuery(array $payInfo)
     {
-        $this->setUri('/weixinPay/orderStatusQuery');
+        $this->setUri('/scanPay/orderStatusQuery');
 
         $this->setParams($payInfo);
 

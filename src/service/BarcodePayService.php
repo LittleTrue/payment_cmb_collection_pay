@@ -13,18 +13,18 @@ use Collection\cmbCollectionClient\Base\Exceptions\ClientError;
 use Collection\cmbCollectionClient\Order\Client;
 
 /**
- * 合单支付 -- 通用服务
+ * 合单支付 -- 付款码收款服务
  */
-class CombinePayService
+class BarcodePayService
 {
     /**
      * @var Client
      */
-    private $combinePayClient;
+    private $barcodePayClient;
 
     public function __construct(Application $app)
     {
-        $this->combinePayClient = $app['combine_pay'];
+        $this->barcodePayClient = $app['barcode_pay'];
     }
 
     /**
@@ -37,20 +37,7 @@ class CombinePayService
             throw new ClientError('请求参数丢失。');
         }
 
-        return $this->combinePayClient->barcodePaySubmit($payInfo);
-    }
-
-    /**
-     * 通用场景 收款码支付.
-     * @throws ClientError
-     */
-    public function scanPaySubmit(array $payInfo)
-    {
-        if (empty($payInfo)) {
-            throw new ClientError('请求参数丢失。');
-        }
-
-        return $this->combinePayClient->scanPaySubmit($payInfo);
+        return $this->barcodePayClient->barcodePaySubmit($payInfo);
     }
 
     /**
@@ -63,19 +50,19 @@ class CombinePayService
             throw new ClientError('请求参数丢失。');
         }
 
-        return $this->combinePayClient->barcodeRefund($payInfo);
+        return $this->barcodePayClient->barcodeRefund($payInfo);
     }
 
     /**
-     * 收款码收款退款申请.
+     * 付款码收款支付结果查询.
      * @throws ClientError
      */
-    public function scanRefund(array $payInfo)
+    public function orderQuery(array $payInfo)
     {
         if (empty($payInfo)) {
             throw new ClientError('请求参数丢失。');
         }
 
-        return $this->combinePayClient->scanRefund($payInfo);
+        return $this->barcodePayClient->orderQuery($payInfo);
     }
 }
